@@ -59,7 +59,7 @@ namespace Core
 
             services.AddSpaStaticFiles(conf =>
             {
-                conf.RootPath = "../client/dist";
+                conf.RootPath = "../../client/dist";
             });
         }
 
@@ -89,15 +89,9 @@ namespace Core
                 $$"
             );
             
-            if (isDevEnv)
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Core v1"));
-            }
-
-            //ToDo решить вопроскики
-            // app.UseHttpsRedirection();
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Core v1"));
 
             app.UseRouting();
             app.UseCors(builder => builder
@@ -118,15 +112,12 @@ namespace Core
             });
 
             app.UseStaticFiles();
-            if (!isDevEnv)
-                app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles();
 
             app.UseSpa(spa =>
             {
-                spa.Options.SourcePath = "../client";
-
-                if (isDevEnv)
-                    spa.UseReactDevelopmentServer(npmScript: "start");
+                spa.Options.SourcePath = "../../client";
+                spa.UseReactDevelopmentServer(npmScript: "run dev");
             });
 
         }

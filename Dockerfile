@@ -23,13 +23,10 @@ WORKDIR /src/CodeRev/Core
 RUN dotnet restore "Core.csproj"
 RUN dotnet publish "Core.csproj" -c Release -o /app/publish
 
-RUN dotnet dev-certs https
-RUN dotnet dev-certs https --trust
-
 FROM base AS final
 
 EXPOSE 5001
-ENV ASPNETCORE_URLS=https://localhost:5001/
+ENV ASPNETCORE_URLS=http://*:5001/
 ENV DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
 WORKDIR /app
 COPY --from=publish /app/publish ./Core
