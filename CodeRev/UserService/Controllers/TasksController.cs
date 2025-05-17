@@ -33,7 +33,14 @@ namespace UserService.Controllers
         {
             return Ok(taskHelper.GetAllTasks());
         }
-        
+
+	[Authorize(Roles = "Interviewer,HrManager,Admin")]
+        [HttpDelete]
+        public IActionResult DeleteTaskById([Required] [FromQuery(Name = "id")] Guid taskId)
+        {
+
+            return Ok("{result: \"success\"}");
+        }       
         [Authorize(Roles = "Interviewer,HrManager,Admin")]
         [HttpPost]
         public IActionResult PostTask([Required] [FromBody] TaskCreationDto taskCreation)
